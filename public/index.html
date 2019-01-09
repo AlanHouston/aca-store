@@ -3,12 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My Store</title>
+    <title>Alan's Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-     <script src="products.js"></script>    
+    <header>
+        <input id="searchBox" type="text" name="searchInput"/>
+        <button type="submit" onclick="search()">Submit</button>
+    </header>
+    <div class="container">
+        <ul id="productList"></ul>
+    </div>
+    <script src="products.js"></script>    
     <script src="index.js"></script>   
 </body>
 </html>
