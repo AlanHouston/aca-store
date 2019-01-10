@@ -1,6 +1,6 @@
 const products = [{
     "_id": 1,
-    "name": "Body Luxuries Sweet Lavender Hand Sanitizer",
+    "name": "Body Luxuries Sweet Lavender Honey Hand Sanitizer",
     "description": "Makes your hands clean",
     "reviews": 46,
     "rating": 2,
