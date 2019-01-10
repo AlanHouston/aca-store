@@ -2,20 +2,18 @@
 //sterilize search input
 //make input form
 
-// import searchHandlers from './searchHandlers';
-
 let displayProducts={
     // products: products,
     display: function(theProducts){
         document.getElementById('productList').innerHTML = theProducts.map(item=>
         `<li>
-            <ul>
+            <ul id="productUl">
                 <li><h2>${item.name}<h2></li>
                 <li><img src="${item.imgUrl}" alt="${item.description}"/></li>
                 <li>Rating: ${item.rating}</li>
                 <li>Reviews: ${item.reviews.length}</li>
                 <li>${item.price}</li>
-                <button onclick="displayProducts.showDetails(${item})">Details</button>
+                <button onclick="this.showDetails(${item.description})">Details</button>
                 <br/>
                 <button onclick="cartHandlers.addToCart(${item})">Add to Cart!</button>
                 <select>
@@ -32,15 +30,18 @@ let displayProducts={
                 </select>
                 <li id="detailSpace"></li>
             </ul>
-        </li>`).join('');    
+        </li>`).join('');   
     },
-    showDetails: function(theProduct){
-        document.getElementById('detailSpace').innerHTML = theProduct.description
+ 
+    showDetails: function(detail){
+        document.getElementById('detailSpace').innerHTML = detail.value;
+        // let newLi = document.createElement('li');
+        // newLi.textContent = detail;
+        // document.getElementById('productUl').appendChild(newLi);
     }
 }
 displayProducts.display(products);
 
-//if searchhandlers module, start delete here
 let searchHandlers = {
     input: document.getElementById('searchBox'),
     // formattedInput: this.input.toLowerCase(),
@@ -54,14 +55,13 @@ let searchHandlers = {
                 // console.log(item);
             }
         })
+        document.getElementById('searchBox').value='';
     },
     showResults: function(){
         document.getElementById('titleHolder').innerHTML = 'Search Results!'
         displayProducts.display(this.results)
     }
 }
-//if searchhandlers module, end delete here
-
 
 let cartHandlers = {
     cart: [],
@@ -72,5 +72,4 @@ let cartHandlers = {
         document.getElementById('titleHolder').innerHTML = 'Your Cart!'
         displayProducts.display(this.cart);
     }
-
 }
