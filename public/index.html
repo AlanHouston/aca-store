@@ -10,9 +10,11 @@
 <body>
     <header>
         <input id="searchBox" type="text" name="searchInput"/>
-        <button onclick="searchHandlers.search()">Submit</button>
+        <button onclick="searchHandlers.search()">Search</button>
+        <button onclick="cartHandlers.displayCart()">View Cart!</button>
     </header>
     <div class="container">
+        <h1 id="titleHolder"></h1>
         <ul id="productList"></ul>
     </div>
 
