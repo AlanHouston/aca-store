@@ -1,5 +1,5 @@
 'use strict';
-//sterilize search input
+//sterilize search input, tolowercase
 //make input form
 
 let displayProducts={
@@ -13,9 +13,9 @@ let displayProducts={
                 <li>Rating: ${item.rating}</li>
                 <li>Reviews: ${item.reviews.length}</li>
                 <li>${item.price}</li>
-                <button onclick="this.showDetails(${item.description})">Details</button>
+                <button onclick="displayProducts.showDetails('${item.description}')">Details</button>
                 <br/>
-                <button onclick="cartHandlers.addToCart(${item})">Add to Cart!</button>
+                <button onclick="cartHandlers.addToCart('${item.id}')">Add to Cart!</button>
                 <select>
                     <option value='1'>1</option>
                     <option value='2'>2</option>
@@ -32,9 +32,9 @@ let displayProducts={
             </ul>
         </li>`).join('');   
     },
- 
     showDetails: function(detail){
-        document.getElementById('detailSpace').innerHTML = detail.value;
+        console.log(detail)
+        document.getElementById('detailSpace').innerHTML = detail;
         // let newLi = document.createElement('li');
         // newLi.textContent = detail;
         // document.getElementById('productUl').appendChild(newLi);
@@ -65,8 +65,9 @@ let searchHandlers = {
 
 let cartHandlers = {
     cart: [],
-    addToCart: function(product){
-        this.cart.push(product);
+    addToCart: function(productId){
+        let cartProduct = products.find(item=>item._id === productId);
+        this.cart.push(cartProduct);  
     },
     displayCart: function(){
         document.getElementById('titleHolder').innerHTML = 'Your Cart!'
