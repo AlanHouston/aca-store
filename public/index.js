@@ -1,10 +1,8 @@
 'use strict';
-//Fix details, SEE FUNCTION LINE 39
+//Fix details, LINE 39
 //sterilize search input, tolowercase
-//make input form
+//make search -> input form
 //after add item to cart, show cart
-//if no cart, display 'no items in cart'
-//if search returns nothing, display 'nothing matched your search'
 
 function backToHome(){
     let allProducts = [];
@@ -58,6 +56,7 @@ let displayProducts = {
                             <option value=10>10</option>
                         </select>
                     </li>
+                    <li id="detailSpace"></li>
                 </ul>
             </li>`   
         ).join('');  
@@ -67,7 +66,7 @@ let displayProducts = {
     // showDetails: function(detail){
     //     console.log(detail)
     //     document.getElementById('detailSpace').innerHTML = detail;
-    //     //WRONG - NEEDS TO OCCUPY WHOLE PAGE, NOT JUST POPULATE BELOW, ALSO NEEDS *ALL* INFO
+    //     //WRONG - FOLLOW DIRECTIONS, ALAN - NEEDS TO OCCUPY PRODUCT LIST, NOT JUST POPULATE BELOW, NEEDS *ALL* INFO
     //     // let newLi = document.createElement('li');
     //     // newLi.textContent = detail;
     //     // document.getElementById('productUl').appendChild(newLi);
@@ -116,6 +115,7 @@ let cartHandlers = {
             this.cartId.push(cartProduct[i]._id);
         }
         // console.log('cartProduct',cartProduct)
+        sessionStorage.setItem("cart", JSON.stringify(this.cartId));
     },
     displayCart: function(){
         document.getElementById('titleHolder').innerHTML = 'Your Cart!';
@@ -139,3 +139,9 @@ let cartHandlers = {
 }
 
 window.onload = backToHome();
+window.onload = function(){
+    cartHandlers.cartId = JSON.parse(sessionStorage.getItem("cart"));
+    if (!cartHandlers.cartId){
+      cartHandlers.cartId = [];
+    }
+}
