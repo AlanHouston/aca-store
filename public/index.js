@@ -11,6 +11,7 @@ function backToHome(){
     for(let i=0;i<products.length;i++){
         allProducts.push(products[i]._id)
     }
+    document.getElementById('titleHolder').innerHTML = ''
     displayProducts.beginDisplay(allProducts);
 }
 
@@ -39,22 +40,24 @@ let displayProducts = {
                     <li>Rating: ${item.rating}</li>
                     <li>Reviews: ${item.reviews.length}</li>
                     <li>${item.price}</li>
-                    <button onclick="displayProducts.showDetails('${item.description}')">Details</button>
-                    <br/>
-                    <button onclick="cartHandlers.addToCart('${item._id}')">Add to Cart!</button>
-                    <select>
-                        <option value=1>1</option>
-                        <option value=2>2</option>
-                        <option value=3>3</option>
-                        <option value=4>4</option>
-                        <option value=5>5</option>
-                        <option value=6>6</option>
-                        <option value=7>7</option>
-                        <option value=8>8</option>
-                        <option value=9>9</option>
-                        <option value=10>10</option>
-                    </select>
-                    <li id="detailSpace"></li>
+                    <li>
+                        <button onclick="displayProducts.showDetails('${item.description}')">Details</button>
+                    </li>
+                    <li>
+                        <button onclick="cartHandlers.addToCart('${item._id}')">Add to Cart!</button>
+                        <select>
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                            <option value=3>3</option>
+                            <option value=4>4</option>
+                            <option value=5>5</option>
+                            <option value=6>6</option>
+                            <option value=7>7</option>
+                            <option value=8>8</option>
+                            <option value=9>9</option>
+                            <option value=10>10</option>
+                        </select>
+                    </li>
                 </ul>
             </li>`   
         ).join('');  
@@ -91,7 +94,7 @@ let searchHandlers = {
         //     }
         // })
         if(this.results.length === 0){
-            document.getElementById('productList').innerHTML = `<h1>"Your search returned no results"</h1>`
+            document.getElementById('productList').innerHTML = `<h1>"Your search returned no results!"</h1>`
         }else{
             this.showResults();
         }
@@ -110,17 +113,28 @@ let cartHandlers = {
     addToCart: function(productId){
         let cartProduct = products.filter(item=>item._id == productId)
         for (let i=0;i<cartProduct.length;i++){
-            this.cartId.push(cartProduct[i]);
+            this.cartId.push(cartProduct[i]._id);
         }
-        console.log('cartProduct',cartProduct)
+        // console.log('cartProduct',cartProduct)
     },
     displayCart: function(){
         document.getElementById('titleHolder').innerHTML = 'Your Cart!';
-        let cart = [];
-        for (let i=0;i<this.cartId.length;i++){
-            cart.push(this.cartId[i]);
+        // console.log('cart id',this.cartId)
+        if (this.cartId.length === 0){
+            document.getElementById('productList').innerHTML = `<h1>"You have no items in your cart!"</h1>`
+        }else{
+            displayProducts.beginDisplay(this.cartId);
         }
-        displayProducts.beginDisplay(cart);
+    },
+    removeFromCart: function(productId){
+        this.cartId.find((item, index)=>{
+            item._id == productId
+            this.cartId.splice(index,1);
+        });
+        let removeButton = document.createElement('li')
+        document.getElementById('productUl').appendChild(removeButton);
+        removeButton.innerHTML = `<button onclick="cartHandlers.removeFromCart('{item._id}')">Remove from Cart</button>`
+        //^^none of this works :/
     }
 }
 
